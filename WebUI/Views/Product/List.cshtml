@@ -1,0 +1,23 @@
+﻿@model WebUI.Models.ProductsListViewModel
+@{
+    ViewBag.Title = "Products";
+}
+@using WebUI.HtmlHelpers
+@foreach (var p in Model.Products)
+{
+    Html.RenderPartial("ProductSummary", p);
+    //Метод RenderPartial() не возвращает разметку HTML, как большинство других
+    //вспомогательных методов. Вместо этого он записывает содержимое
+    //непосредственно в поток ответа, и именно поэтому мы должны вызывать его как
+    //полную строку C#, используя точку с запятой.
+    //------------------------------------------------
+    //@Html.Partial("ProductSummary", p)
+    //------------------------------------------------
+    //Html.Partial, который
+    //делает то же, что и метод RenderPartial, но возвращает фрагмент HTML и
+    //может быть вызван как @Html.Partial("ProductSummary", р).
+}
+<div class="pager">
+    @Html.PageLinks(Model.PagingInfo, x =>
+    Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+</div>

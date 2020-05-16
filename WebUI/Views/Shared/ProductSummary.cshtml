@@ -1,0 +1,14 @@
+﻿@model Domain.Entities.Product
+    <div class="item">
+        <h3>@Model.Name</h3>
+        @Model.Description
+        @using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            @Html.HiddenFor(x => x.ProductId)
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+            <input type="submit" value="+ Add to cart" />
+        }
+        @*По умолчанию вспомогательный метод BeginForm создает форму, которая
+        использует метод HTTP POST.*@
+        <h4>@Model.Price.ToString("c")</h4>
+    </div>
