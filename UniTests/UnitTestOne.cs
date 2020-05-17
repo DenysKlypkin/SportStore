@@ -16,7 +16,7 @@ namespace UnitTests
     class UnitTestOne
     {
         [TestMethod]
-        public void Can_Pagigate()
+        public void Can_Paginate()
         {
             // Arrange
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
@@ -27,20 +27,19 @@ namespace UnitTests
                 new Product {ProductId = 4, Name = "P4"},
                 new Product {ProductId = 5, Name = "P5"}
             }.AsQueryable());
-
             ProductController controller = new ProductController(mock.Object);
             controller.pageSize = 3;
-
-            ProductsListViewModel result
-                 = (ProductsListViewModel)controller.List(null, 2).Model;
+            // Act
+            IEnumerable<Product> result = (IEnumerable<Product>)controller.List(2).Model;
             // Assert
-            Product[] prodArray = result.Products.ToArray();
+            Product[] prodArray = result.ToArray();
             Assert.IsTrue(prodArray.Length == 2);
             Assert.AreEqual(prodArray[0].Name, "P4");
             Assert.AreEqual(prodArray[1].Name, "P5");
         }
 
         [TestMethod]
+        
         public void Can_Generate_Page_Links()
         {
             // Arrange - define an HTML helper - we need to do this
