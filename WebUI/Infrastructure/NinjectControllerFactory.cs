@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Domain.Concrete;
 using System.Configuration;
+using WebUI.Infrastructure.Abstract;
+using WebUI.Infrastructure.Concrete;
 
 namespace WebUI.Infrastructure
 {
@@ -44,6 +46,7 @@ namespace WebUI.Infrastructure
             ninjectKernel.Bind<IOrderProcessor>()
             .To<EmailOrderProcessor>()
             .WithConstructorArgument("settings", emailSettings);
+            ninjectKernel.Bind<IAuthProvider>().To<FormsAuthProvider>();
         }
     }
     
